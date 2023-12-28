@@ -1,0 +1,3 @@
+- install redis from here https://hub.docker.com/_/redis
+> docker pull redis
+> docker run --name amka-redis -d redis

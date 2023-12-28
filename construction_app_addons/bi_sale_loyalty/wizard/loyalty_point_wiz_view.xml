@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="wizard_redeem_view" model="ir.ui.view">
+			<field name="name">loyalty.point.redeem.wizard.form</field>
+			<field name="model">loyalty.point.redeem.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Loyalty Point Redeem" >
+					<group col="4">
+						<field name="partner_id"/>
+						<field name="loyalty_points" />
+					</group>
+					<group>
+						<field name="product_id"/>
+					</group>
+					<group attrs="{'invisible':[('product_id','=' ,False)]}" col="4">
+						<field name="loyalty_used"/>
+						<field name="after_redeem" />
+					</group>
+					<group>
+						<field name="extra_note"/>
+						<field name="is_redeemed" invisible="1"/>
+					</group>
+					<footer>
+						<button attrs="{'invisible':[('is_redeemed','=' ,True)]}"  name="button_redeem_points" string="Redeem Points"
+							type="object" class="oe_highlight loyalty_redeem" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="loyalty_point_redeem_action" model="ir.actions.act_window">
+			<field name="name">Redeem Loyalty Points</field>
+			<field name="res_model">loyalty.point.redeem.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="wizard_redeem_view" />
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="redeem_loyalty_menu" 
+			name="Redeem Points" 
+			parent="bi_sale_loyalty.main_loyalty_history" 
+			sequence="2"
+			action = "loyalty_point_redeem_action"
+				  groups="bi_sale_loyalty.group_loyalty_history"
+		/>
+
+		<record id="redeem_receipt_format" model="report.paperformat">
+			<field name="name">Redeem Receipt</field>
+			<field name="default" eval="True" />
+			<field name="format">custom</field>
+			<field name="page_height">230</field>
+			<field name="page_width">100</field>
+			<field name="margin_top">40</field>
+			<field name="margin_bottom">10</field>
+			<field name="margin_left">5</field>
+			<field name="margin_right">5</field>
+			<field name="header_line" eval="False" />
+			<field name="orientation">Portrait</field>
+			<field name="header_spacing">36</field>
+			<field name="dpi">110</field>
+		</record>
+
+		
+		<report 
+			string="Redeem Receipt" 
+			id="action_redeem_receipt" 
+			model="loyalty.point.redeem.wizard" 
+			report_type="qweb-pdf"
+			name="bi_sale_loyalty.report_redeem_receipt" 
+			file="bi_sale_loyalty.report_redeem_receipt" 
+			
+		/>
+		
+		
+		<template id="report_redeem_receipt">
+			<t t-call="web.html_container">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<br/><br/>
+						<div class="text-center container" style="border: 1px solid black;">
+
+							<h2>Redeem Receipt </h2>
+						</div>
+						<br/>
+						<table  class="table table-sm">
+							<tbody>
+								<tr>
+									<td colspan="3" >Date:</td>
+									<td style="text-align:center;"><t t-esc="context_timestamp(datetime.datetime.today()).strftime('%Y-%m-%d')"/></td>
+								</tr>
+							</tbody>
+						</table>
+						<br/>
+						<h4 class="text-center">Redeem Details</h4>
+						<h5><span t-esc="partner_id.name" ></span></h5>
+						<table  class="table table-sm">
+							<tbody>
+								<!-- <tr>
+									<td style="text-align:center;"><t t-esc="partner_id.name"/></td>
+								</tr> -->
+								<tr>
+									<td colspan="3" >Point Balance:</td>
+									<td style="text-align:right;"><t t-esc="total_points + points"/></td>
+								</tr>
+								<tr>
+									<td colspan="3" >Product:</td>
+									<td style="text-align:right;"><t t-esc="product_id.name"/></td>
+								</tr>
+								<tr>
+									<td colspan="3" >Points:</td>
+									<td style="text-align:right;"><t t-esc="points"/></td>
+								</tr>
+								<hr/>
+								<tr>
+									<td colspan="3" >REST POINT:</td>
+									<td style="text-align:right;"><t t-esc="total_points"/></td>
+								</tr>
+							</tbody>
+						</table>
+						<br/>
+						<span style="text-align:right;margin-left:80%;margin-bottom:5px;">
+							RECEIVER
+						</span>
+						<span style="text-align:right;margin-left:80%;">
+							( &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;)
+						</span>
+						<div style="font-size:16px;">
+							<span>Notes:</span>
+							<span t-esc="extra_note"></span>
+						</div>
+						
+					</div>
+				</t>
+			</t>
+	</template>
+	</data>
+</odoo>

@@ -1,0 +1,81 @@
+<odoo>
+  <data>
+
+    <!-- Form view -->
+    <record model="ir.ui.view" id="whatsapp_plain_message_form">
+      <field name="name">WhatsApp plain Message</field>
+      <field name="model">whatsapp.plain.message</field>
+      <field name="arch" type="xml">
+        <form string="WhatsApp plain Message">
+          <header>
+
+           <button class="btn-success" name="action_confirm" states="draft" type="object" string="Set to Sent"/>
+           <button name="action_draft" states="failed,sent" type="object" string="Set to Draft"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,sent,failed"/>
+
+          </header>
+          <sheet>
+            <div class="oe_title">
+                  <h1>
+                      <field name="name"/>
+                  </h1>
+            </div>
+          <group>
+            <group>
+                <field name="date_initiated"/>
+              <field name="message_tag_content"/>
+            </group>
+
+
+              <group>
+              <field name="status_message"/>
+            </group>
+          </group>
+
+
+
+           </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="whatsapp_plain_message_tree">
+      <field name="name">WhatsApp plain Message Tree</field>
+      <field name="model">whatsapp.plain.message</field>
+      <field name="arch" type="xml">
+         <tree string="WhatsApp plain Message"  decoration-success="state=='sent'" decoration-warning="state=='draft'" decoration-danger="state=='failed'">
+          <field name="name"/>
+              <field name="date_initiated"/>
+          <field name="message_tag_content"/>
+              <field name="company_id" />
+              <field name="user" />
+             <field name="state" />
+             <field name="status_message" />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="whatsapp_plain_message_action">
+      <field name="name">WhatsApp plain Message</field>
+      <field name="res_model">whatsapp.plain.message</field>
+      <field name="view_mode">tree,form</field>
+
+      <field name="context">{'create': True, 'edit': True}</field>
+    </record>
+
+
+      <menuitem name="Plain Messages" id="mass_messages_plain_menu"
+                parent="mass_messages_parent_menu"
+                action="whatsapp_plain_message_action"
+                sequence="2"
+        />
+
+
+  </data>
+</odoo>

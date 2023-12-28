@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="claim_details_view_form" model="ir.ui.view">
+        <field name="name">claim.details.view.form</field>
+        <field name="model">claim.details</field>
+        <field name="arch" type="xml">
+            <form string="Claim Details Form">
+                <header>
+                    <!-- attrs="{'invisible': [('invoice_id', '!=', False)]}" -->
+                    <button states="approved" name="action_create_bill"
+                            string="Create Bill" type="object" class="oe_highlight"
+                            />
+                    <button name="action_confirm" class="btn-warning"
+                            states="draft" type="object" string="Submit"/>
+                    <button name="action_print" class="btn-primary"
+                            states="draft,confirm,approved" type="object" string="Print Details"/>
+                    <button name="action_approve" class="oe_highlight"
+                            groups="insurance_management_cybro.group_insurance_focal_user" states="insurance" type="object" string="Approve"/>
+                    <button name="action_insurance" class="btn-primary" groups="insurance_management_cybro.group_insurance_manager" states="confirm" type="object" string="Send to Approval"/>
+                    <button name="action_cancel" states="draft" type="object" class="btn-danger" string="Cancel"/>
+                     <button
+                        name="%(insurance_management_cybro.action_decline_claim)d"
+                        string="Decline Request"
+                        type="action"
+                        class="btn-danger"
+                        groups="insurance_management_cybro.group_insurance_focal_user"
+                        attrs="{'invisible': [('state', 'in', ('draft','cancel','confirm','approved'))]}"
+                    />
+                    <button groups="insurance_management_cybro.group_insurance_manager" name="action_draft" class="btn-warning" states="cancel,confirm,approved"
+                            type="object" string="Reset to Draft"/>
+
+          <field name="state" widget="statusbar" statusbar_visible="draft,confirm,approved,insurance,reject,cancel"/>
+               </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field  attrs="{'readonly': [('state', 'in', ['confirm','approved','reject','cancel'])]}"  name="partner_id"/>
+
+                            <field attrs="{'readonly': [('state', 'in', ['approved','reject','cancel'])],'invisible':[('state', 'in', ['draft'])] }" name="insurance_id" options="{'no_create': True}"/>
+                            <field attrs="{'readonly': [('state', 'in', ['approved','reject','cancel'])],'invisible':[('state', 'in', ['draft'])] }" name="policy_id"/>
+
+                            <field attrs="{'readonly': [('state', 'in', ['confirm','approved','reject','cancel'])]}" name="incident_type" />
+                        </group>
+                        <group>
+                            <field attrs="{'readonly': [('state', 'in', ['confirm','approved','reject','cancel'])]}" string="Time and Date of Incident" name="date_claimed"/>
+                            <field attrs="{'readonly': [('state', 'in', ['confirm','approved','reject','cancel'])]}" string="Place of Incident" name="place_of_incident"/>
+                            <field  attrs="{'readonly': [('state', 'in', ['approved','reject','cancel'])],'invisible':[('state', 'in', ['draft'])] }" name="amount"/>
+                            <field attrs="{'readonly': [('state', 'in', ['approved','reject','cancel'])],'invisible':[('state', 'in', ['draft'])] }"  name="invoice_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description of Incident">
+                            <field attrs="{'readonly': [('state', 'in', ['confirm','approved','reject','cancel'])]}" name="note_field"/>
+                        </page>
+                        <page string="Others">
+                             <group>
+                                  <group>
+                                      <field attrs="{'readonly': [('state', 'in', ['confirm','approved','reject','cancel'])]}" name="reported_on" readonly="1"/>
+                                       <field name="user_id" readonly="1"/>
+                                   <field attrs="{'readonly': [('state', 'in', ['confirm','approved','reject','cancel'])]}" name="approved_by"/>
+                                   <field name="currency_id" invisible="1"/>
+                                  </group>
+
+                             </group>
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" options="{'post_refresh':True}" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="claim_details_view_tree" model="ir.ui.view">
+        <field name="name">claim.details.view.tree</field>
+        <field name="model">claim.details</field>
+        <field name="arch" type="xml">
+            <tree string="Claim Details Tree">
+                <field name="name"/>
+                <field name="insurance_id"/>
+                <field name="partner_id"/>
+                <field name="policy_id"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="claim_details_action" model="ir.actions.act_window">
+        <field name="name">Claim Management</field>
+        <field name="res_model">claim.details</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                You haven't created any claims yet.
+            </p>
+        </field>
+    </record>
+
+</odoo>

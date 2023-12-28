@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- Project materials Kanban View  -->
+        <record model="ir.ui.view" id="view_project_site_materials_request_kanban">
+            <field name="name">site.materials.request.kanban</field>
+            <field name="model">site.materials.request</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="order_no" />
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="date_order"/>
+                    <field name="total_materials_cash_cost" />
+                    <field name="state"/>
+                    <field name="activity_state"/>
+                    <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.project_id.value"/></span></strong>
+                                    </div>
+                                    <strong><field name="total_materials_cash_cost" widget="monetary"/></strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left text-muted">
+                                        <span><t t-esc="record.name.value"/> <t t-esc="record.date_order.value"/></span>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'cancel': 'default', 'done': 'success'}}"/>
+                                        <span> <t t-esc="record.order_no.value"/></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+     <!-- Tree view -->
+        <record id="view_project_site_materials_request" model="ir.ui.view">
+            <field name="name">site.materials.request_tree</field>
+            <field name="model">site.materials.request</field>
+            <field name="arch" type="xml">
+                <tree string="Project Site Materials Request" decoration-bf="message_needaction==True" decoration-warning="state=='confirmed'" decoration-success="state=='approved'" decoration-danger="state=='declined'" decoration-muted="state=='cancel'">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" string="Budget Title" readonly="1"/>
+                    <field name="order_no" string="Request Number" readonly="1"/>
+                    <field name="project_id" string="Project" readonly="1"/>
+                    <field name="date_order" string="Order Date"/>
+                    <field name="state" readonly="1"/>
+                    <field name="total_materials_cash_cost"  sum="Total" widget="monetary"/>
+                </tree>
+            </field>
+        </record>
+
+
+     <!-- form view -->
+      <record id="view_project_site_materials_request_form" model="ir.ui.view">
+            <field name="name">site.materials.request_form</field>
+            <field name="model">site.materials.request</field>
+            <field name="arch" type="xml">
+              <form string="Project Site Materials Requistion " class="o_sale_order">
+                <header>
+                    <button name="reset_to_draft" states="cancel" class="btn-primary" type="object" string="Reset to Draft"/>
+                    <button name="action_confirm" states="draft" class="btn-primary" type="object" string="Send for Approval"/>
+                    <button name="action_approve" states="confirmed" class="btn-success" type="object" string="Approve Request"/>
+                    <button name="action_decline" states="confirmed" class="btn-danger" type="object" string="Decline Request"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved,declined"/>
+                </header>
+                <sheet>
+                   <!-- <div class="oe_button_box" name="button_box">
+
+                        <button name="action_view_budget"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-money"
+                            attrs="{'invisible': [('project_budget_amount', '=', 0)]}">
+                            <field name="project_budget_amount" widget="statinfo" string="Budget"/>
+                        </button>
+
+                        <button name="action_view_budget"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-money"
+                            attrs="{'invisible': [('budget_available_balance', '=', 0)]}">
+                            <field name="budget_available_balance" widget="statinfo" string="Balance"/>
+                        </button>
+                    </div> -->
+                    <div role="alert" class="alert alert-danger"
+                         attrs="{'invisible': ['|',('budget_available_balance', '>', 0),('total_materials_cash_cost', '=', 0)]}">
+                        You have <strong> exhausted your budget for this project </strong> Consider creating another budget for this project!
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="order_no" readonly="1"/>
+                            <field name="budget_available_balance" invisible="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="project_id" />
+                        </group>
+                        <group>
+                            <field name="date_order" />
+                            <field name="total_materials_cash_cost" />
+                        </group>
+
+
+                    </group>
+
+                    <group>
+
+                    </group>
+                    <notebook>
+                        <page string="Materials" name="material_line">
+                            <field
+                                name="material_line"
+                                widget="section_and_note_one2many"
+                                mode="tree,kanban"
+                                attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                            >
+                                <form>
+                                    <field name="date_required" />
+                                    <field name="job_name" />
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="uom" readonly="1"/>
+                                    <field name="unit_price_estimate"/>
+                                    <field name="sub_total"/>
+                                </form>
+                                <tree
+                                    string="Materials"
+                                    editable="bottom"
+
+                                >
+                                    <field name="date_required" />
+                                    <field name="job_name" />
+                                    <field name="product_id"/>
+                                    <field name="description" />
+                                    <field name="quantity" />
+                                    <field name="uom"/>
+                                    <field name="unit_price_estimate" widget="monetary" />
+                                    <field name="sub_total"  />
+                                </tree>
+
+                            </field>
+                            <group name="note_group" col="6">
+                                <group colspan="4">
+                                    <field name="notes" nolabel="1" placeholder="Type additional information here...."/>
+                                </group>
+
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="total_cost_materials_line">
+
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="total_cost_materials_line" />
+                                    </div>
+                                    <field name="total_cost_materials_line" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                        <page string="Cash" name="cash_line">
+                            <field
+                                name="cash_line"
+                                widget="section_and_note_one2many"
+                                mode="tree,kanban"
+                                attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                            >
+                                <form>
+                                    <field name="date_required" />
+                                    <field name="title" string="Used for ?" />
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="sub_total"/>
+                                </form>
+                                <tree
+                                    string="Cash Requested"
+                                    editable="bottom"
+                                >
+                                     <field name="date_required" />
+                                    <field name="title" />
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="sub_total"/>
+                                </tree>
+
+                            </field>
+                            <group name="note_group" col="6">
+
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="total_cost_cash_line">
+
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="total_cost_cash_line" />
+                                    </div>
+                                    <field name="total_cost_cash_line" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                        <page name="other" string="Additional Details">
+                               <group>
+                                <field name="requested_by" readonly="1"/>
+                                <field name="approved_by" readonly="1"/>
+                               </group>
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+              </form>
+            </field>
+        </record>
+
+
+    <!-- actions -->
+        <record id="action_project_site_materials_request" model="ir.actions.act_window">
+            <field name="name">Project Site Materials Requisition</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">site.materials.request</field>
+            <field name="view_mode">kanban,tree,form</field>
+           <!-- <field name="search_view_id" ref="sale_order_view_search_inherit_sale"/> -->
+            <field name="context">{}</field>
+            <!--<field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field> -->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a New Material Requisition Request
+                </p>
+                <p>
+                    Once the request is approved, this will be used to analyze and compare project budget </p>
+            </field>
+        </record>
+       <!-- custom action for expenses on the site for site managers -->
+       <record id="site_hr_expense_actions_my_unsubmitted" model="ir.actions.act_window">
+           <field name="name">Site Expenses</field>
+            <field name="res_model">hr.expense</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <!--<field name="search_view_id" ref="hr_expense.hr_expense_view_search"/>
+            <field name="context">{'search_default_my_expenses': 1, 'search_default_no_report': 1}</field>-->
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new site expense
+              </p>
+            </field>
+        </record>
+
+</odoo>

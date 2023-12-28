@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+      <menuitem id="project_budgets"
+            name="Project BOQ"
+            parent="project.menu_main_pm"
+            sequence="2"/>
+     <!-- Project Budget Kanban View  -->
+        <record model="ir.ui.view" id="view_project_budget_kanban">
+            <field name="name">project.budget_estimation.kanban</field>
+            <field name="model">project.budget.estimation</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="total_budget_estimate"/>
+                    <field name="start_date"/>
+                    <field name="state"/>
+                    <field name="activity_state"/>
+                    <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.project_id.value"/></span></strong>
+                                    </div>
+                                    <strong><field name="total_budget_estimate" widget="monetary"/></strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left text-muted">
+                                        <span><t t-esc="record.name.value"/> <t t-esc="record.start_date.value"/></span>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'cancel': 'default', 'done': 'success'}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+       <!-- Tree view -->
+        <record id="view_project_budget_tree" model="ir.ui.view">
+            <field name="name">project.budget_estimation.tree</field>
+            <field name="model">project.budget.estimation</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Project BOQ" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'" multi_edit="1">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name" string="BOQ Title" readonly="1"/>
+                    <field name="budget_number" string="BOQ Number" readonly="1"/>
+                    <field name="start_date" string="Start Date"/>
+<!--                    <field name="end_date" string="End Date"/>-->
+                    <field name="project_id" readonly="1"/>
+                    <field name="state" readonly="1"/>
+                    <field name="total_budget_estimate"  sum="Tax Total" widget="monetary" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+      <!-- form view -->
+      <record id="view_project_budget_estimation_form" model="ir.ui.view">
+            <field name="name">project.budget_estimation.form</field>
+            <field name="model">project.budget.estimation</field>
+            <field name="arch" type="xml">
+              <form string="BOQ" class="o_sale_order">
+                <header>
+                    <button name="action_cancel" states="confirmed" class="btn-danger" type="object" string="Cancel"/>
+                    <button name="reset_to_draft" states="cancel,done" class="btn-primary" type="object" string="Reset to Draft"/>
+                    <button name="action_confirm" states="draft" class="btn-primary" type="object" string="Confirm"/>
+                    <button name="action_quotation" states="confirmed" class="btn-success" type="object" string="Generate Quote"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="budget_number" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                             <field name="project_id" />
+                        </group>
+                           <group>
+                                <field name="start_date" />
+                           </group>
+                    </group>
+
+                    <notebook>
+                        <!--<page string="Introductions">
+                             <group>
+                                 <field string="Introduction" name="sub_title" />
+                              </group>
+                        </page>-->
+
+                          <page string="BOQ Description" name="description">
+                            <field name="description" widget="html"/>
+                        </page>
+                        <page string="Equipments / Accessories" name="materials_lines">
+                            <field
+                                name="material_line"
+                                widget="section_and_note_one2many"
+                                mode="tree,kanban"
+                                attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                            >
+                                <form>
+                                    <field name="date_required" />
+                                    <field name="job_name" string="Category" />
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="uom" readonly="1"/>
+                                    <field name="unit_price_estimate"/>
+                                    <field name="sub_total"/>
+                                </form>
+                                <tree
+                                    string="Materials"
+                                    editable="bottom"
+
+                                >
+                                    <field name="date_required" />
+                                    <field name="job_name" />
+                                    <field name="product_id"/>
+                                    <field name="description" />
+                                    <field name="quantity" />
+                                    <field name="uom"/>
+                                    <field name="unit_price_estimate" widget="monetary" />
+                                    <field name="sub_total"  />
+                                </tree>
+
+                            </field>
+                            <group name="note_group" col="6">
+                                <group colspan="4">
+                                    <field name="description" nolabel="1" placeholder="Description here..."/>
+                                </group>
+
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="materials_total">
+
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount_total_materials" />
+                                    </div>
+                                    <field name="amount_total_materials" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+
+                        <page string="Labourers" name="labourers_lines">
+                            <field
+                                name="labourers_line"
+                                widget="section_and_note_one2many"
+                                mode="tree,kanban"
+                                attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                            >
+                                <form>
+                                    <field name="date_required" />
+                                    <field name="job_name" />
+                                    <field name="description"/>
+                                    <field name="employee"/>
+                                    <field name="unit_cost"/>
+                                    <!--<field name="sub_total"/>-->
+                                </form>
+                                <tree
+                                    string="Materials"
+                                    editable="bottom"
+                                >
+                                    <field name="date_required" />
+                                    <field name="job_name" />
+                                    <field name="description"/>
+                                    <field name="employee"/>
+                                    <field name="unit_cost"/>
+                                    <!--<field name="sub_total"/>-->
+                                </tree>
+
+                            </field>
+                            <group name="note_group" col="6">
+
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="labourers_total">
+
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="labourers_amount_total" />
+                                    </div>
+                                    <field name="labourers_amount_total" nolabel="1" class="oe_subtotal_footer_separator"
+                                           widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+
+                        <page string="Overhead/Indirect Costs" name="overhead_line_lines">
+                            <field
+                                name="overhead_line"
+                                widget="section_and_note_one2many"
+                                mode="tree,kanban"
+                                attrs="{'readonly': [('state', 'in', ('done','cancel'))]}"
+                            >
+                                <form>
+                                    <field name="date_required" />
+                                    <field name="product_id"/>
+                                    <field name="description" />
+                                    <field name="quantity" />
+                                    <field name="uom"/>
+                                    <field name="unit_price_estimate" widget="monetary" />
+                                    <field name="sub_total"  />
+                                </form>
+                                <tree
+                                    string="Materials"
+                                    editable="bottom"
+                                >
+                                    <field name="date_required" />
+                                    <field name="product_id"/>
+                                    <field name="description" />
+                                    <field name="quantity" />
+                                    <field name="uom"/>
+                                    <field name="unit_price_estimate" widget="monetary" />
+                                    <field name="sub_total"  />
+                                </tree>
+
+                            </field>
+                            <group name="note_group" col="6">
+
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="overhead_total">
+
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="overhead_amount_total" />
+                                    </div>
+                                    <field name="overhead_amount_total" nolabel="1" class="oe_subtotal_footer_separator"
+                                           widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+              </form>
+            </field>
+        </record>
+
+
+    <!-- actions -->
+        <record id="action_project_budget" model="ir.actions.act_window">
+            <field name="name">Project BOQ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.budget.estimation</field>
+            <field name="view_mode">tree,kanban,form</field>
+           <!-- <field name="search_view_id" ref="sale_order_view_search_inherit_sale"/> -->
+            <field name="context">{}</field>
+            <!--<field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field> -->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new project boq
+                </p><p>
+                   Once a project boa is confirmed, then you can track actual expenses in comparision with this BOQ. A project can only have one budget active BOQ at a time!
+                </p>
+            </field>
+        </record>
+
+    <!-- menu linking to the action -->
+    <menuitem id="action_project_budget_menu"
+            name="Project BOQ"
+            action="action_project_budget"
+            parent="project_budgets"
+            sequence="1" />
+
+</odoo>
+

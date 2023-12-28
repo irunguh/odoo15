@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.cron" id="cron_repush_paybill_task">
+    <field name="name">Re-push Paybill payments: Resend bills for processing</field>
+    <field name="model_id" ref="mpesa_payments_failed.model_failed_paybill_payments"/>
+    <field name="state">code</field>
+    <field name="code">model.process_failed_transactions()</field>
+    <field name="active" eval="True"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="interval_number">7</field> <!-- To decide clearly -->
+    <field name="interval_type">minutes</field>
+    <field name="numbercall">-1</field>
+  </record>
+
+</odoo>

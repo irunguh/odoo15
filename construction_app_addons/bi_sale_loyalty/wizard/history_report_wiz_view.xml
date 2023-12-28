@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- POS History Report Report  -->
+	<report 
+		string="History Report" 
+		id="action_history_report" 
+		model="history.report.wizard"
+		report_type="qweb-pdf"
+		name="bi_sale_loyalty.report_loyalty_history" 
+		file="bi_sale_loyalty.report_loyalty_history" 
+	/>
+
+	<record id="history_summary_wizard" model="ir.ui.view">
+		<field name="name">history.report.wizard.form</field>
+		<field name="model">history.report.wizard</field>
+		<field name="arch" type="xml">
+			<form string="History Report">
+				<group>
+					<group col="4" colspan="4">
+						<field name="start_dt"/>
+						<field name="end_dt"/>
+					</group>
+				</group>
+				<group>
+					<field name="status" widget="selection"/>
+					<field name="product_ids" widget="many2many_tags"/>
+					<field name="customer_ids" widget="many2many_tags"/>
+				</group>
+				<footer>
+					<button name="history_generate_report" string="Print" type="object" class="btn-primary"/>
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>  
+
+	<record id="action_history_report_wiz" model="ir.actions.act_window">
+		<field name="name">History Report</field>
+		<field name="res_model">history.report.wizard</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+
+	<menuitem name="Reports"
+		id="menu_reports" groups="bi_sale_loyalty.group_loyalty_history"
+		sequence="3"
+		parent="main_loyalty_history" />
+
+	<menuitem id="menu_history_report"
+		name="History Report"
+		parent="menu_reports"
+		action="action_history_report_wiz"
+		sequence="1"/>
+
+	<template id="report_loyalty_history">
+			<t t-call="web.html_container">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<br/><br/>
+						<div class="text-center container" style="border: 1px solid black;">
+							<h2>History Report</h2>
+						</div>
+						<br/>
+						<br/>
+						<br/>
+						
+						<div class="container">
+							<p><span><b>Report Date time </b> </span> <span class="pull-right"><t t-esc="context_timestamp(datetime.datetime.today()).strftime('%Y-%m-%d')" /></span></p>
+							<table  class="table table-sm">
+								<tbody>
+								<tr>
+									<td class="text-center"><b>Date</b></td>
+									<td><b>Product Gift Filter</b></td>
+									<td><b>Partner Filters</b></td>
+									<td><b>Status</b></td>
+								</tr>
+								<tr>
+									<td><t t-esc="start_dt"/>&#160;&#160; <t t-esc="end_dt"/></td>
+									<td><t t-if="product_filter"><t t-esc="product_filter"/></t></td>
+									<td><t t-if="partner_filter"><t t-esc="partner_filter"/></t></td>
+									<td><t t-esc="status"/></td>
+								</tr>
+								</tbody>
+							</table>
+							<br/>
+							<br/>
+							<!-- <h5 class="text-center">Payments</h5> -->
+							<div>
+								<t  t-foreach='loyalty_history' t-as='history'>
+									<div>
+										<span>
+											<span><b>Customer:</b></span>
+											<span><t t-esc="history['name']" /></span>
+											<span style="margin-left:50%;margin-bottom:10px;"><b>Points:</b></span>
+											<span><t t-esc="history['bet_points'] + history['start_points']"/></span>
+											<table  class="table table-sm">
+												<tbody>
+													<tr>
+														<td><b>Date</b></td>
+														<td><b>Entry</b></td>
+														<td><b>Product</b></td>
+														<td><b>Amount</b></td>
+														<td><b>Status</b></td>
+														<td><b>Points</b></td>
+														<td><b>Total</b></td>
+													</tr>
+													<tr>
+														<td><b>Initial</b></td>
+														<td></td>
+														<td></td>
+														<td><t t-esc="history['start_payment_amount']"/></td>
+														<td></td>
+														<td><t t-esc="history['start_points']" /></td>
+														<td><t t-esc="history['start_points']" /></td>
+													</tr>
+													<t t-foreach="history['data']" t-as='data'>
+														<t t-if="data['status'] == 'Receive'" >
+															<tr style="color:green">
+																<td><t t-esc="data['date']" /></td>
+																<td><t t-esc="data['payment_id']" /></td>
+																<td><t t-esc="data['product']" /></td>
+																<td><t t-esc="data['payment_amount']" /></td>
+																<td><t t-esc="data['status']" /></td>
+																<td><t t-esc="data['points']" /></td>
+																<td><t t-esc="data['total_points']" /></td>
+																
+															</tr>
+														</t>
+														<t t-if="data['status'] == 'Send'" >
+															<tr style="color:red">
+																<td><t t-esc="data['date']" /></td>
+																<td><t t-esc="data['payment_id']" /></td>
+																<td><t t-esc="data['product']" /></td>
+																<td><t t-esc="data['payment_amount']" /></td>
+																<td><t t-esc="data['status']" /></td>
+																<td>-<t t-esc="data['points']" /></td>
+																<td><t t-esc="data['total_points']" /></td>
+																
+															</tr>
+														</t>
+														<t t-if="data['status'] == 'Cancel'" >
+															<tr style="color:black">
+																<td><t t-esc="data['date']" /></td>
+																<td><t t-esc="data['payment_id']" /></td>
+																<td><t t-esc="data['product']" /></td>
+																<td><t t-esc="data['payment_amount']" /></td>
+																<td><t t-esc="data['status']" /></td>
+																<td>-<t t-esc="data['points']" /></td>
+																<td><t t-esc="data['total_points']" /></td>
+																
+															</tr>
+														</t>
+
+													</t>
+													<tr>
+														<td><b>End</b></td>
+														<td><b></b></td>
+														<td><b></b></td>
+														
+														<td><b><t t-esc="history['start_payment_amount'] + history['current_payment_total']"/></b></td>
+														<td><b></b></td>
+														<td><b><t t-esc="history['bet_points'] + history['start_points']"/></b></td>
+														<td><b><t t-esc="history['bet_points'] + history['start_points']"/></b></td>
+													</tr>
+												</tbody>
+											</table>
+										</span>
+									</div>
+								</t>
+								<br/>
+							</div>
+						</div>
+						<hr/>
+					</div>
+				</t>
+			</t>
+		</template>
+
+
+</odoo>
+

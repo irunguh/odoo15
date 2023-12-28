@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <!--<record id="action_project_report_all_custom" model="ir.actions.client">
+            <field name="name">Projects Report</field>
+            <field name="tag">projects_dashboard</field>
+        </record>
+
+        <menuitem name="Projects Dashboard" id="project_reports_dashboard_custom"
+                  parent="construction_project_tools.menu_project_listing_main"
+                  sequence="1"
+                  groups="construction_project_tools.group_project_budget_manager"
+                  action="action_project_report_all_custom"/>-->
+
+        <record id="action_bi" model="ir.actions.client">
+            <field name="name">BI Reports Management</field>
+            <field name="tag">action_manage_reports</field>
+            <field name="target"></field>
+        </record>
+
+        <menuitem name="Management Reports" id="bi_reports_menu"
+                  sequence="7"
+                  groups="construction_project_tools.group_project_budget_manager"
+                  action="action_bi"/>
+
+    </data>
+</odoo>

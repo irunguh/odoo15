@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form_extend</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+             <xpath expr="//page[@name='extra']" position="after">
+
+                 <page name='project_linked' string="Project ">
+                     <group name="container_row_2">
+                                <group string="Project Linked" priority="1">
+                                     <field name="project_id" />
+                                </group>
+                     </group>
+                 </page>
+                 <page name='truck_details' string="Truck Details">
+                     <group name="container_row_2">
+                                <group string="Truck RegNo" priority="1">
+                                     <field name="truck_number"/>
+                                </group>
+                                <group string="Driver" priority="1">
+                                     <field name="truck_driver" />
+                                </group>
+                     </group>
+                 </page>
+                </xpath>
+
+
+
+        </field>
+    </record>
+      <record id="stock_picking_form_inherit_custom" model="ir.ui.view">
+        <field name="name">stock.picking.form_extend_custom</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+
+            <field name="scheduled_date" position="after">
+                <field name="delivery_date" />
+            </field>
+
+
+
+        </field>
+    </record>
+</odoo>

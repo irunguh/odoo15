@@ -1,0 +1,81 @@
+<odoo>
+  <data>
+
+    <!-- Form view -->
+    <record model="ir.ui.view" id="rabbit_queue_responses">
+      <field name="name">WhatsApp Rabbit Message</field>
+      <field name="model">whatsapp.rabbit.queue</field>
+      <field name="arch" type="xml">
+        <form string="WhatsApp Rabbit Queue Message">
+
+          <sheet>
+            <div class="oe_title">
+                  <h1>
+                      <field name="name" readonly="1"/>
+                  </h1>
+            </div>
+          <group>
+            <group>
+              <field name="phone"/>
+            </group>
+              <group>
+              <field name="message"/>
+            </group>
+              <group>
+              <field name="send_state"/>
+            </group>
+
+              <group>
+              <field name="status_message"/>
+
+            </group>
+          </group>
+
+
+
+           </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="whatsapp_rabbit_media_message_tree">
+      <field name="name">WhatsApp Rabbit Message Tree</field>
+      <field name="model">whatsapp.rabbit.queue</field>
+      <field name="arch" type="xml">
+         <tree string="WhatsApp Rabbit Media Message">
+          <field name="name"/>
+             <field name="phone"/>
+          <field name="message"/>
+           <field name="send_state" />
+            <field name="status_message" />
+        </tree>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="whatsapp_rabbit_media_message_action">
+      <field name="name">WhatsApp Rabbit Media Message</field>
+      <field name="res_model">whatsapp.rabbit.queue</field>
+      <field name="view_mode">tree,form</field>
+
+      <field name="context">{'create': True, 'edit': True}</field>
+    </record>
+
+      <menuitem name="RabbitMQ Messages" id="rabbit_mass_messages_parent_menu"
+                parent="mass_messages_extend_settings"
+
+                sequence="200"
+        />
+
+      <menuitem name="Queue Messages Status" id="rabbitmq_mass_messages_media_menu"
+                parent="rabbit_mass_messages_parent_menu"
+                action="whatsapp_rabbit_media_message_action"
+                sequence="1"
+        />
+
+
+  </data>
+</odoo>

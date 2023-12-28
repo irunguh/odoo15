@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="view_claim_wizard" model="ir.ui.view">
+            <field name="name">Decline Claim</field>
+            <field name="model">decline.claim.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Decline a Claim Request">
+                    <p class="oe_grey">
+                        Enter Reasons Below
+                    </p>
+                    <group>
+                     <field name="name" />
+                    </group>
+
+                    <footer>
+                        <button name="decline_and_email_customer" class="btn btn-primary" string="Decline" type="object"/>
+                        <button string="Cancel" class="btn btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_decline_claim" model="ir.actions.act_window">
+            <field name="name">Decline Claim</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">decline.claim.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+</odoo>

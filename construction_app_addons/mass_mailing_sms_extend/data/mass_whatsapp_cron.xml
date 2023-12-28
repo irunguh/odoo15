@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.cron" id="cron_send_whatsapp_messages_task">
+    <field name="name">WhatsApp: Send Media Messages </field>
+    <field name="model_id" ref="mass_mailing_sms_extend.model_whatsapp_media_message"/>
+    <field name="state">code</field>
+    <field name="code">model.whatsapp_media_processing()</field>
+    <field name="active" eval="True"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="interval_number">2</field> <!-- To decide clearly -->
+    <field name="interval_type">minutes</field>
+    <field name="numbercall">-1</field>
+  </record>
+
+    <!--<record model="ir.cron" id="cron_rabbit_mq_whatsapp_messages_task">
+    <field name="name">WhatsApp: Rabbitmq Media Messages </field>
+    <field name="model_id" ref="mass_mailing_sms_extend.model_whatsapp_media_message"/>
+    <field name="state">code</field>
+    <field name="code">model.rabbitmq_receive()</field>
+    <field name="active" eval="True"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="interval_number">2</field> &lt;!&ndash; To decide clearly &ndash;&gt;
+    <field name="interval_type">minutes</field>
+    <field name="numbercall">-1</field>
+  </record>-->
+
+
+    <record model="ir.cron" id="cron_redis_publish_whatsapp_messages_task">
+    <field name="name">Redis Publish Media Messages </field>
+    <field name="model_id" ref="mass_mailing_sms_extend.model_whatsapp_media_message"/>
+    <field name="state">code</field>
+    <field name="code">model.odoo_bot_redis_whatsapp_media_processing()</field>
+    <field name="active" eval="True"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="interval_number">2</field> <!-- To decide clearly -->
+    <field name="interval_type">minutes</field>
+    <field name="numbercall">-1</field>
+  </record>
+
+    <record model="ir.cron" id="cron_create_messages_to_send_from_cron_task">
+    <field name="name">WhatsApp: Create Messages to send from cron</field>
+    <field name="model_id" ref="mass_mailing_sms_extend.model_whatsapp_media_message"/>
+    <field name="state">code</field>
+    <field name="code">model.create_whatsapp_message_from_mailing_list_set_to_cron()</field>
+    <field name="active" eval="True"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="interval_number">3</field>
+    <field name="interval_type">minutes</field>
+    <field name="numbercall">-1</field>
+  </record>
+
+
+   <record model="ir.cron" id="cron_send_whatsapp_messages_simple_task">
+    <field name="name">WhatsApp: Send Simple Messages </field>
+    <field name="model_id" ref="mass_mailing_sms_extend.model_whatsapp_plain_message"/>
+    <field name="state">code</field>
+    <field name="code">model.whatsapp_plain_processing()</field>
+    <field name="active" eval="True"/>
+    <field name="user_id" ref="base.user_root"/>
+    <field name="interval_number">2</field> <!-- To decide clearly -->
+    <field name="interval_type">minutes</field>
+    <field name="numbercall">-1</field>
+  </record>
+
+
+     <!--<record model="ir.cron" id="cron_send_whatsapp_media_message_templates_task">
+        <field name="name">WhatsApp: Templates </field>
+        <field name="model_id" ref="mass_mailing_sms_extend.model_whatsapp_media_message"/>
+        <field name="state">code</field>
+        <field name="code">model.check_templates()</field>
+        <field name="active" eval="True"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">20000</field> &lt;!&ndash; To decide clearly &ndash;&gt;
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+   </record>-->
+
+
+</odoo>

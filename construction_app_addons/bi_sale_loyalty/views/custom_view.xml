@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<template id="loyalty_assets_backend" name="loyalty_assets_backend assets" inherit_id="web.assets_backend">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/bi_sale_loyalty/static/src/js/custom.js"></script>
+			</xpath>
+		</template>
+
+		<record id="product_loyalty_form_view" model="ir.ui.view">
+			<field name="name">product.loyalty</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_form_view" />
+			<field name="arch" type="xml">
+				<xpath expr="//div[@class='oe_title']/div[@name='options']" position="inside">
+					<div>
+						<field name="is_gift_product"/>  
+						<label for="is_gift_product"/> 
+					</div>
+				</xpath>
+				<xpath expr="//div[@name='pricing']" position="after">
+					<field name="num_of_points" /> <!-- attrs="{'invisible': [('is_gift_product', '=', True)]}" -->
+				</xpath>
+
+
+			</field>
+		</record>
+	</data>
+	
+</odoo>

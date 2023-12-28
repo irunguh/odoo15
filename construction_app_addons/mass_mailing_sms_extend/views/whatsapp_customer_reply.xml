@@ -1,0 +1,78 @@
+<odoo>
+  <data>
+
+    <!-- Form view -->
+    <record model="ir.ui.view" id="whatsapp_customer_reply_form">
+      <field name="name">WhatsApp Customer Reply</field>
+      <field name="model">whatsapp.customer.reply</field>
+      <field name="arch" type="xml">
+        <form string="WhatsApp Customer Reply">
+
+          <sheet>
+            <div class="oe_title">
+                  <h1>
+                      <field name="name"/>
+                  </h1>
+            </div>
+          <group>
+            <group>
+                 <field name="sender_name"/>
+                 <field name="date_initiated"/>
+                 <field name="message"/>
+            </group>
+
+               <group>
+                 <field name="chat_name"/>
+                 <field name="instance_id"/>
+                 <field name="forwarded_message"/>
+                   <field name="company_id"/>
+            </group>
+
+          </group>
+
+
+
+           </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="whatsapp_customer_reply_tree">
+      <field name="name">WhatsApp Customer Reply Tree</field>
+      <field name="model">whatsapp.customer.reply</field>
+      <field name="arch" type="xml">
+         <tree string="WhatsApp Customer Reply">
+          <field name="name"/>
+              <field name="sender_name"/>
+          <field name="message"/>
+              <field name="company_id" />
+              <field name="instance_id" />
+             <field name="forwarded_message" />
+             <field name="date_initiated" />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="whatsapp_customer_reply_action">
+      <field name="name">WhatsApp Customer Reply</field>
+      <field name="res_model">whatsapp.customer.reply</field>
+      <field name="view_mode">tree,form</field>
+      <!--<field name="context">{'create': True, 'edit': True}</field>-->
+    </record>
+
+
+      <menuitem name="WhatsApp Reply" id="whatsapp_customer_reply_action_menu"
+                parent="mass_messages_parent_menu"
+                action="whatsapp_customer_reply_action"
+                sequence="2"
+        />
+
+
+  </data>
+</odoo>

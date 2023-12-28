@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+
+    <!-- Form view -->
+    <record model="ir.ui.view" id="marketing_message_groups_form">
+      <field name="name">Message Groups Form</field>
+      <field name="model">marketing.message.groups</field>
+      <field name="arch" type="xml">
+        <form string="Message Groupings">
+
+          <sheet>
+            <div class="oe_title">
+                  <h1>
+                      <field name="name" readonly="0"/>
+                  </h1>
+            </div>
+          <group>
+              <group>
+              <field name="description"/>
+            </group>
+          </group>
+
+
+
+           </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="messaging_marketing_tree">
+      <field name="name">Message Groupings Tree</field>
+      <field name="model">marketing.message.groups</field>
+      <field name="arch" type="xml">
+         <tree string="Marketing Message">
+             <field name="name"/>
+             <field name="description" />
+             <field name="company_id" />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="messaging_marketing_action">
+      <field name="name">Message Groups</field>
+      <field name="res_model">marketing.message.groups</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'create': True, 'edit': True}</field>
+    </record>
+
+
+
+      <menuitem name="Message Categories" id="mass_messages_categories_settings"
+                parent="mass_mailing_sms_extend.mass_messages_parent_menu" action="messaging_marketing_action"
+                sequence="100"
+        />
+
+
+  </data>
+</odoo>

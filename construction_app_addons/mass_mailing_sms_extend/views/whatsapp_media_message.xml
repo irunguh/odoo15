@@ -1,0 +1,92 @@
+<odoo>
+  <data>
+
+    <!-- Form view -->
+    <record model="ir.ui.view" id="whatsapp_media_message_form">
+      <field name="name">WhatsApp Media Message</field>
+      <field name="model">whatsapp.media.message</field>
+      <field name="arch" type="xml">
+        <form string="WhatsApp Media Message">
+          <header>
+
+           <button class="btn-success" name="action_confirm" states="draft" type="object" string="Set to Sent"/>
+           <button name="action_draft" states="failed,sent" type="object" string="Set to Draft"/>
+            <field name="state" widget="statusbar" statusbar_visible="tosend,draft,sent,failed,done"/>
+
+          </header>
+          <sheet>
+            <div class="oe_title">
+                  <h1>
+                      <field name="name" readonly="1"/>
+                  </h1>
+            </div>
+          <group>
+            <group>
+              <field name="date_initiated"/>
+            </group>
+              <group>
+              <field name="message_tag_content"/>
+            </group>
+              <group>
+              <field name="message_public_image_link"/>
+            </group>
+
+              <group>
+              <field name="status_message"/>
+                  <field name="status_message_technical" />
+            </group>
+          </group>
+
+
+
+           </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="whatsapp_media_message_tree">
+      <field name="name">WhatsApp Media Message Tree</field>
+      <field name="model">whatsapp.media.message</field>
+      <field name="arch" type="xml">
+         <tree string="WhatsApp Media Message"  decoration-success="state=='sent'" decoration-warning="state=='draft'" decoration-danger="state=='failed'">
+          <field name="name"/>
+             <field name="category"/>
+             <field name="date_initiated"/>
+          <field name="message_tag_content"/>
+           <field name="message_public_image_link" />
+            <field name="company_id" />
+             <field name="user" />
+             <field name="state" />
+             <field name="source_message" />
+             <field name="status_message" />
+
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="whatsapp_media_message_action">
+      <field name="name">WhatsApp Media Message</field>
+      <field name="res_model">whatsapp.media.message</field>
+      <field name="view_mode">tree,form</field>
+
+      <field name="context">{'create': True, 'edit': True}</field>
+    </record>
+
+      <menuitem name="Whatsapp" id="mass_messages_parent_menu"
+                parent="crm.crm_menu_root" sequence="2"
+        />
+
+      <menuitem name="Media Messages" id="mass_messages_media_menu"
+                parent="mass_messages_parent_menu"
+                action="whatsapp_media_message_action"
+                sequence="1"
+        />
+
+
+  </data>
+</odoo>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="Projectdashboard">
+        <div class="accounts-dashboard-wrap">
+            <div class="o_dashboards col-xs-12 col-sm-12 col-lg-12 col-md-12" style="background-color: #e1e1e1;overflow: scroll; !important; ">
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <div class="dash-header">
+                                    <h1 class="custom-h1 dashboard-h1">Projects Dashboard </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="row" style="margin:0px">
+                <div class="col-sm-12">
+                    <iframe
+                        src="https://bi.growdeskconsulting.com/public/dashboard/b113f89a-6400-4275-8832-e84c2a3d16a2"
+                        frameborder="0" height="100%"
+
+                    ></iframe>
+                </div>
+             </div>
+
+
+
+
+
+
+
+        </div>
+    </t>
+
+    <t t-name="ManageReports">
+        <div class="accounts-dashboard-wrap">
+            <div class="o_dashboards col-xs-12 col-sm-12 col-lg-12 col-md-12" style="background-color: #e1e1e1;overflow: scroll; !important; ">
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <div class="dash-header">
+                                    <h1 class="custom-h1 dashboard-h1">Management Reports</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+             <div class="row" style="margin:0px">
+                <div class="col-sm-12">
+                    <iframe
+                        src="https://bi.growdeskconsulting.com/public/question/e3db383c-d1bd-4aca-9c80-eaa3e2c1b3a6"
+                        frameborder="0" height="100%"
+
+                    ></iframe>
+
+                </div>
+             </div>
+
+            <div class="row" style="margin:0px">
+                <div class="col-sm-12">
+                    <iframe
+                        src="https://bi.growdeskconsulting.com/public/question/f2b74514-8fff-4de2-b3e7-ba2933c8af2a"
+                        frameborder="0" height="100%"
+
+                    ></iframe>
+
+                </div>
+             </div>
+
+             <div class="row" style="margin:0px">
+                <div class="col-sm-12">
+                    <iframe
+                        src="https://bi.growdeskconsulting.com/public/question/b55b4a76-0208-41f5-966a-68eda875101c"
+                        frameborder="0" height="100%"
+
+                    ></iframe>
+
+                </div>
+             </div>
+
+            <div class="row" style="margin:0px">
+                <div class="col-sm-12">
+                    <iframe
+                        src="https://bi.growdeskconsulting.com/public/question/2db1ff92-19c3-4345-b8a2-082d9a531fd3"
+                        frameborder="0" height="100%"
+
+                    ></iframe>
+
+                </div>
+             </div>
+
+              <div class="row" style="margin:0px">
+                <div class="col-sm-12">
+                    <iframe
+                        src="https://bi.growdeskconsulting.com/public/question/c6497ae6-afef-4154-a3a2-54dad356d69b"
+                        frameborder="0" height="100%"
+
+                    ></iframe>
+
+                </div>
+             </div>
+
+
+        </div>
+    </t>
+</templates>

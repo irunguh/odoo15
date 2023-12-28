@@ -1,0 +1,4 @@
+- Add option for users to specify type of project
+- in the project  module add roles ( Job supervisor, Construction expeditor , Safety manager, Construction foreman, Electrician, Construction workers)
+- we can have specific users for each category or the site manager and project mana will have all roles
+- Add custom project timeline view

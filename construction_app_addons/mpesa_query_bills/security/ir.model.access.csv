@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_missing_paybill_payments_user","missing_paybill_payments_user","model_missing_paybill_payments","group_missing_paybills_user",1,1,1,1
+"access_missing_paybill_payments_manager","missing_paybill_payments_manager","model_missing_paybill_payments","group_missing_paybills_manager",1,1,1,1
+"access_pullmpesa_bills_wizard_user","pullmpesa_bills_wizard_user","model_pullmpesa_bills_wizard","group_missing_paybills_manager",1,1,1,1

@@ -1,0 +1,86 @@
+<odoo>
+  <data>
+
+    <!-- Form view -->
+    <record model="ir.ui.view" id="chat_api_setup_form">
+      <field name="name">Chat API Setup Form</field>
+      <field name="model">chat.api.setup</field>
+      <field name="arch" type="xml">
+        <form string="Chat API Set Up">
+
+          <sheet>
+            <div class="oe_title">
+                  <h1>
+                      <field name="name" readonly="0"/>
+                  </h1>
+            </div>
+          <group>
+            <group>
+              <field name="instance_url"/>
+               <field name="company_id" />
+            </group>
+              <group>
+              <field name="chatapi_access_token"/>
+            </group>
+               <group>
+              <field name="chatapi_state"/>
+            </group>
+              <group>
+              <field name="description"/>
+            </group>
+          </group>
+
+
+
+           </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="chat_api_setup_tree">
+      <field name="name">Chat API Setup Tree</field>
+      <field name="model">chat.api.setup</field>
+      <field name="arch" type="xml">
+         <tree string="Chat API Setup">
+          <field name="name"/>
+          <field name="instance_url"/>
+           <field name="chatapi_access_token" />
+             <field name="chatapi_state" />
+             <field name="description" />
+            <field name="company_id" />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="chat_api_setup_action">
+      <field name="name">Chat API Setup</field>
+      <field name="res_model">chat.api.setup</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'create': True, 'edit': True}</field>
+    </record>
+
+     <menuitem name="API Settings" id="mass_messages_extend_settings" groups="base.group_erp_manager"
+                sequence="100"
+        />
+
+      <menuitem name="ChatAPI Settings" id="mass_messages_chatapi_settings"
+                parent="mass_messages_extend_settings"
+
+                sequence="10"
+        />
+
+      <menuitem name="Set up" id="chat_api_setup_menu"
+                parent="mass_messages_chatapi_settings"
+                action="chat_api_setup_action"
+                sequence="1"
+        />
+
+
+  </data>
+</odoo>

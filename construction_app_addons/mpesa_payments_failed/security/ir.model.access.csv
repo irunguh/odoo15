@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_failed_paybill_payments_user","failed_paybill_payments_user","model_failed_paybill_payments","group_failed_paybill_payments_user",1,0,0,0
+"access_failed_paybill_payments_manager","failed_paybill_payments_manager","model_failed_paybill_payments","group_failed_paybill_payments_manager",1,1,1,0

@@ -1,0 +1,14 @@
+<odoo>
+    <template id="report_invoice_document_for_tax_amount" inherit_id="account.report_invoice_document">
+        <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[5]" position="after">
+            <t t-if="o.move_type in ['out_invoice', 'out_refund'] and o.print_tax_amount_in_invoice">
+                <th class="text-right">Tax Amount</th>
+            </t>
+        </xpath>
+         <xpath expr="//tbody[hasclass('invoice_tbody')]/t[3]/tr/t[1]/td[6]" position="after">
+             <t t-if="o.move_type in ['out_invoice', 'out_refund'] and o.print_tax_amount_in_invoice">
+                 <td class="text-right"><span t-field="line.tax_amount"/></td>
+             </t>
+        </xpath>
+    </template>
+</odoo>

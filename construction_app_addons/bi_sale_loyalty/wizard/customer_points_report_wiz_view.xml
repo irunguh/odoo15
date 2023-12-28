@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- POS Customer Points Report Report  -->
+	<report 
+		string="Customer Points Report" 
+		id="action_customer_points_report" 
+		model="customer.points.report.wizard" 
+		report_type="qweb-pdf"
+		name="bi_sale_loyalty.report_customer_points_history" 
+		file="bi_sale_loyalty.report_customer_points_history" 
+	/>
+
+	<record id="customer_point_summary_wizard" model="ir.ui.view">
+		<field name="name">customer.points.report.wizard.form</field>
+		<field name="model">customer.points.report.wizard</field>
+		<field name="arch" type="xml">
+			<form string="Customer Points Report">
+				<group>
+					<group col="4" colspan="4">
+						<field name="start_dt"/>
+						<field name="end_dt"/>
+					</group>
+				</group>
+				<group>
+					<field name="status" widget="selection"/>
+					<field name="product_ids" widget="many2many_tags"/>
+					<field name="customer_ids" widget="many2many_tags"/>
+				</group>
+				<footer>
+					<button name="customer_points_generate_report" string="Print" type="object" class="btn-primary"/>
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>  
+
+	<record id="action_customer_point_report_wiz" model="ir.actions.act_window">
+		<field name="name">Customer Points Report</field>
+		<field name="res_model">customer.points.report.wizard</field>
+		<field name="view_mode">form</field>
+		<field name="target">new</field>
+	</record>
+
+	<menuitem id="menu_customer_point_report"
+		name="Customer Points Report"
+		parent="menu_reports"
+		action="action_customer_point_report_wiz"
+		sequence="1"/>
+
+	<template id="report_customer_points_history">
+			<t t-call="web.html_container">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<br/>
+						<br/>
+						<div class="text-center container" style="border: 1px solid black;">
+							<h2>Customer Points Summary</h2>
+						</div>
+						<br/>
+						<br/>
+						<br/>
+						
+						<div class="container">
+							<p><span><b>Report Date </b> </span> <span class="pull-right"><t t-esc="context_timestamp(datetime.datetime.today()).strftime('%Y-%m-%d')" /></span></p>
+							<table  class="table table-sm">
+								<tbody>
+								<tr>
+									<td class="text-center"><b>Date</b></td>
+									<td><b>Product Gift Filter</b></td>
+									<td><b>Partner Filters</b></td>
+									<td><b>Status</b></td>
+								</tr>
+								<tr>
+									<td><t t-esc="start_dt"/>&#160;&#160; <t t-esc="end_dt"/></td>
+									<td><t t-if="product_filter"><t t-esc="product_filter"/></t></td>
+									<td><t t-if="partner_filter"><t t-esc="partner_filter"/></t></td>
+									<td><t t-esc="status"/></td>
+								</tr>
+								</tbody>
+							</table>
+							<br/>
+							<br/>
+							<!-- <h5 class="text-center">Payments</h5> -->
+							<div>
+								<table  class="table table-sm">
+									<tbody>
+										<tr>
+											<td><b>Customers</b></td>
+											<td><b>Points</b></td>
+										</tr>
+										<tr t-foreach='customer_data' t-as='customer'>
+												<td><t t-esc="customer['name']" /></td>
+												<td><t t-esc="customer['total']"/></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<hr/>
+					</div>
+				</t>
+			</t>
+		</template>
+
+
+</odoo>
+

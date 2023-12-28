@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+       <!-- Tree view -->
+        <record id="view_mpesa_pulled_bills" model="ir.ui.view">
+            <field name="name">missing.paybill.paymentstree</field>
+            <field name="model">missing.paybill.payments</field>
+            <field name="arch" type="xml">
+                <tree string="Pulled Bills"  decoration-warning="status=='cancel'" decoration-danger="status=='draft'" decoration-success="status=='push'">
+                    <field name="name" readonly="1"/>
+                    <field name="transaction_type"  readonly="1"/>
+                    <field name="customer"  readonly="1"/>
+                    <field name="payment_date"  readonly="1"/>
+                    <field name="payer_phone"  readonly="1"/>
+                    <field name="account_no"  readonly="1"/>
+                    <field name="amount"  readonly="1"/>
+                    <field name="status" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- actions -->
+        <record id="action_missing_paybill_payments" model="ir.actions.act_window">
+            <field name="name">Pulled Paybill Payments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">missing.paybill.payments</field>
+            <field name="view_mode">tree,form</field>
+           <!-- <field name="search_view_id" ref="sale_order_view_search_inherit_sale"/> -->
+            <field name="context">{'create': False, 'edit': False}</field>
+            <field name="domain">[('status', 'in', ['process','draft','cancel'])]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                   Pulled Paybill Payments will appear here
+                </p>
+            </field>
+        </record>
+
+    <!-- menu linking to the action -->
+    <menuitem name="Pulled Transactions" id="query_mpesa_bills_menu"
+              sequence="10" parent="mpesa_payment_transactions.mpesa_1_root"
+              action="action_missing_paybill_payments"/>
+
+     <!-- menu linking to the action -->
+       <!-- <menuitem name="All Pulled Bills" id="mpesa_pulled_bills"
+                  sequence="11" parent="query_mpesa_bills_menu"
+                 />-->
+</odoo>
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+       <!-- Tree view -->
+        <record id="view_mpesa_paybill_payments_tree" model="ir.ui.view">
+            <field name="name">mpesa.paybill.payments.tree</field>
+            <field name="model">mpesa.paybill.payments</field>
+            <field name="arch" type="xml">
+                <tree string="Paybill Payments"  decoration-warning="status=='confirm'" decoration-danger="status=='draft'" decoration-success="status=='done'">
+                    <field name="name" readonly="1"/>
+                    <field name="transaction_type"  readonly="1"/>
+                     <field name="mpesa_transaction_no"  readonly="1"/>
+                    <field name="payment_date" readonly="1"/>
+                    <field name="phone_no" />
+                    <field name="account_no" readonly="1"/>
+                    <field name="amount" readonly="1"/>
+                    <field name="balance_to_reconcile" readonly="1"/>
+                    <field name="status" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- actions -->
+        <record id="action_mpesa_paybill_payments" model="ir.actions.act_window">
+            <field name="name">Successful Paybill Payments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mpesa.paybill.payments</field>
+            <field name="view_mode">tree,form</field>
+           <!-- <field name="search_view_id" ref="sale_order_view_search_inherit_sale"/> -->
+            <field name="context">{'create': False, 'edit': True}</field>
+            <field name="domain">[('status', 'in', ['done','draft','reconcile','','invalid'])]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                   Paybill Payments will appear here
+                </p>
+            </field>
+        </record>
+
+    <!-- menu linking to the action -->
+    <menuitem name="Successful Paybill Transactions" id="paybill_pending_payments" parent="mpesa_1_root"
+              action="action_mpesa_paybill_payments"/>
+</odoo>
+

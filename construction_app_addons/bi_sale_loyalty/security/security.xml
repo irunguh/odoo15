@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--Group for  manager -->
+        <record id="group_loyalty_history" model="res.groups">
+            <field name="name">Loyalty Manager</field>
+        </record>
+
+         <record id="group_loyalty_history_user" model="res.groups">
+            <field name="name">Loyalty User</field>
+        </record>
+    </data>
+</odoo>

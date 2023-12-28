@@ -1,0 +1,4 @@
+sudo apt-get install python3-img2pdf
+sudo pip3 install img2pdf
+sudo pip3 install fpdf
+pip3 install num2words

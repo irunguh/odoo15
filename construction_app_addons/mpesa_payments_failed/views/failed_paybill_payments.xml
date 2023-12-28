@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+       <!-- Tree view -->
+        <record id="view_failed_paybill_payments_tree" model="ir.ui.view">
+            <field name="name">failed.paybill.payments.tree</field>
+            <field name="model">failed.paybill.payments</field>
+            <field name="arch" type="xml">
+                <tree string="Pending Paybill Payments"  decoration-warning="status=='cancel'" decoration-danger="status=='draft'" decoration-success="status=='push'">
+                    <field name="name" readonly="1"/>
+                    <field name="transaction"  readonly="1"/>
+                    <field name="status" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- actions -->
+        <record id="action_failed_paybill_payments" model="ir.actions.act_window">
+            <field name="name">Pending Paybill Payments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">failed.paybill.payments</field>
+            <field name="view_mode">tree,form</field>
+           <!-- <field name="search_view_id" ref="sale_order_view_search_inherit_sale"/> -->
+            <field name="context">{'create': False, 'edit': False}</field>
+            <field name="domain">[('status', 'in', ['push','draft','cancel'])]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                   Pending Paybill Payments will appear here, they will then be
+                    processed and pushed back into payment page for reconciliation
+                </p>
+            </field>
+        </record>
+
+    <!-- menu linking to the action -->
+    <menuitem name="Pending Paybill Transactions" id="failed_paybill_pending_payments"
+              sequence="10" parent="mpesa_payment_transactions.mpesa_1_root"
+              action="action_failed_paybill_payments"/>
+</odoo>
+

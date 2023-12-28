@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<odoo noupdate="1">
+
+    <!--Group for  manager -->
+    <record id="group_mass_whatsapp_user" model="res.groups">
+        <field name="name">WhatsApp Marketing User</field>
+    </record>
+
+    <!-- Multi - Company Rules -->
+
+    <record model="ir.rule" id="plain_message_comp_rule">
+        <field name="name">Whatsapp Plain message multi-company</field>
+        <field name="model_id" ref="model_whatsapp_plain_message"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+     <record model="ir.rule" id="media_message_comp_rule">
+        <field name="name">Whatsapp Media message multi-company</field>
+        <field name="model_id" ref="model_whatsapp_media_message"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+     <record model="ir.rule" id="media_reply_message_comp_rule">
+        <field name="name">Whatsapp Reply message multi-company</field>
+        <field name="model_id" ref="model_whatsapp_customer_reply"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+     <record model="ir.rule" id="chat_api_setup_comp_rule">
+        <field name="name">Chat-API set up multi-company</field>
+        <field name="model_id" ref="model_chat_api_setup"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record model="ir.rule" id="mail_contact_setup_comp_rule">
+        <field name="name">Mail Contact multi-company</field>
+        <field name="model_id" ref="model_mailing_contact"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+
+    <record model="ir.rule" id="mailing_list_comp_rule">
+        <field name="name">Mailing List multi-company</field>
+        <field name="model_id" ref="model_mailing_list"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

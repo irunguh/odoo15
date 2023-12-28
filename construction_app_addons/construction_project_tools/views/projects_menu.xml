@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+   <!-- we override this menu -->
+    <menuitem id="menu_project_listing_main" name="All Listings" parent="project.menu_main_pm" sequence="1"/>
+    <menuitem action="project.open_view_project_all" id="project.menu_projects" name="Quick Create Project"
+              parent="construction_project_tools.menu_project_listing_main" sequence="2"/>
+    <menuitem action="project.open_view_project_all_config" id="all_projects_menu_projects_config"
+              name="All Projects" parent="construction_project_tools.menu_project_listing_main" sequence="3"/>
+   <!-- site managers -->
+    <menuitem id="site_manager_menu" name="Site Management" parent="project.menu_main_pm" sequence="4"/>
+     <menuitem action="project.open_view_project_all" id="site_manager_projects" name="My Projects"
+               parent="site_manager_menu" sequence="1"/>
+      <menuitem action="construction_project_tools.action_project_site_materials_request"
+                id="site_manager_projects_materials" name="Materials and Cash Requests"
+               parent="site_manager_menu" sequence="2"/>
+      <menuitem action="construction_project_tools.site_hr_expense_actions_my_unsubmitted"
+                id="site_manager_register_transactions_site_expeses" name="Site Expenses"
+               parent="site_manager_menu" sequence="3"/> <!-- action_register_site_expenses -->
+      <menuitem action="action_project_site_consume_materials_request"
+                id="site_manager_register_transactions" name="Consume Site Materials"
+               parent="site_manager_menu" sequence="4"/>
+      <!-- group menus -->
+
+
+
+
+
+</odoo>

@@ -1,0 +1,54 @@
+<!-- Copyright 2022 Amkatek Limited
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <data>
+    <record id="mass_mailing_sms_extend" model="ir.ui.view">
+        <field name="name">mailing.mailing_extend</field>
+        <field name="model">mailing.mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form" />
+        <field name="arch" type="xml">
+
+            <field name="body_plaintext" position="after">
+                <group>
+
+                    <group>
+                        <field name="medium_id" required="True" string="Medium of Delivery" />
+                        <field name="banner_url" />
+                        <field name="message_type" />
+                         <field name="category" />
+                    </group>
+
+                </group>
+
+            </field>
+           <field name="name" position="after">
+                <field name="send_via_cron" />
+               <field name="send_via_whatsapp" />
+               <field name="redis_sent" readonly="1"/>
+           </field>
+        </field>
+    </record>
+
+        <record id="mass_mailing_sms.mailing_mailing_action_sms" model="ir.actions.act_window">
+        <field name="name">SMS/WhatsApp Digital Marketing</field>
+        <field name="res_model">mailing.mailing</field>
+        <field name="view_mode">kanban,tree,form,calendar,graph</field>
+        <field name="search_view_id" ref="mass_mailing_sms.mailing_mailing_view_search_sms"/>
+        <field name="domain">[('mailing_type', '=', 'sms')]</field>
+        <field name="context">{
+                'search_default_assigned_to_me': 1,
+                'default_user_id': uid,
+                'default_mailing_type': 'sms',
+                'mailing_sms': True
+        }</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a SMS/WhatsApp Marketing Mailing
+          </p><p>
+            Write an appealing SMS/WhatsApp Text Message, define recipients and track its results.
+          </p>
+        </field>
+    </record>
+    </data>
+
+</odoo>

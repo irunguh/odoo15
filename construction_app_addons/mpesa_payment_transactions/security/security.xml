@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<odoo noupdate="1">
+
+    <!--Group for  manager -->
+    <record id="group_mpesa_transaction_manager" model="res.groups">
+        <field name="name">MPESA Payment Manager</field>
+    </record>
+
+    <!--Group for  user -->
+    <record id="group_mpesa_transaction_user" model="res.groups">
+        <field name="name">MPESA Payment User</field>
+    </record>
+
+</odoo>

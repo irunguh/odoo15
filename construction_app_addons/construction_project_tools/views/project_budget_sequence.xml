@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE xml>
+<odoo noupdate="1">
+
+    <!--Sequences for Project Budgets -->
+    <record id="seq_project_budgets_estimation" model="ir.sequence">
+        <field name="name">Project Budget Estimation</field>
+        <field name="code">project.budget.estimation</field>
+        <field name="prefix">C/B/</field>
+        <field name="padding">5</field>
+    </record>
+
+
+    <!--Sequences for Project site materials request -->
+    <record id="seq_site_materials_request" model="ir.sequence">
+        <field name="name">Site materials request</field>
+        <field name="code">site.materials.request</field>
+        <field name="prefix">P/S/M/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!-- consume materials -->
+     <record id="seq_site_consume_materials_request" model="ir.sequence">
+        <field name="name">project consume materials</field>
+        <field name="code">project.consume.materials</field>
+        <field name="prefix">PS/CM/</field>
+        <field name="padding">5</field>
+    </record>
+
+
+</odoo>

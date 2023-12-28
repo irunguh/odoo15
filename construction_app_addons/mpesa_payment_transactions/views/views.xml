@@ -1,0 +1,98 @@
+<openerp>
+  <data>
+
+    <!-- Form view -->
+    <record model="ir.ui.view" id="mpesa_payment_transaction_form">
+      <field name="name">payment transaction form view</field>
+      <field name="model">mpesa.payment.transaction</field>
+      <field name="arch" type="xml">
+        <form string="Create New">
+          <group colspan="4">
+            <group colspan="2" col="2">
+              <separator string="General Information" colspan="2"/>
+              <field string="Account Reference" name="name"/>
+            </group>
+            <group colspan="2" col="2">
+               <field string="Account Payment Reference" name="account_reference"/>
+            </group>
+
+          <notebook>
+            <page string="MPESA Details">
+                <group colspan="2" col="2">
+                   <field string="Merchant Request ID" name="merchant_request_id" />
+                   <field string="Checkout Request ID" name="checkout_request_id"/>
+                </group>
+            </page>
+            <page string="STK Push">
+                 <group colspan="2" col="2">
+                  <field string="STK-Push Status" name="stk_push_status" />
+                     <field string="STK-Push Note" name="stk_push_note" />
+                </group>
+            </page>
+
+              <page string="Payment Status">
+                 <group colspan="2" col="2">
+                  <field string="Payment Status" name="payment_status" />
+                     <field string="Payment Status Note" name="payment_status_note" />
+                   <field name="amount" />
+                </group>
+            </page>
+          </notebook>
+          </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="payment_status_tree">
+      <field name="name">Payment Status Tree</field>
+      <field name="model">mpesa.payment.transaction</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="account_reference"/>
+          <field name="merchant_request_id"/>
+          <field name="checkout_request_id" />
+          <field name="stk_push_status" />
+          <field name="payment_status" />
+          <field name="amount" />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="mpesa_pending_payment_action_window">
+      <field name="name">MPESA Transaction Status Window</field>
+      <field name="res_model">mpesa.payment.transaction</field>
+      <field name="view_mode">tree,form</field>
+      <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="mpesa_payment_transaction_action_server">
+      <field name="name">mpesa.payment.transaction</field>
+      <field name="model_id" ref="model_mpesa_payment_transaction"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    <!-- override-->
+    <menuitem action="account.action_account_payments" id="account.menu_action_account_payments_receivable" parent="account.menu_finance_receivables"
+              groups="base.group_erp_manager" sequence="15"/>
+    <!-- Top menu item -->
+    <menuitem name="MPESA Transactions" id="mpesa_1_root" sequence="6" parent="account.menu_finance"/>
+    <!-- actions -->
+    <menuitem name="STKPush Payments" id="mpesa_pending_payments_skpush" parent="mpesa_1_root"
+              action="mpesa_pending_payment_action_window"/>
+
+  </data>
+</openerp>

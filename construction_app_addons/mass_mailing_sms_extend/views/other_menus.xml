@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+      <menuitem
+                   id="mass_mailing.mass_mailing_menu_root"
+                   name="Email Marketing"
+                   parent="crm.crm_menu_root"
+                   sequence="60"
+                   />
+    <!-- web_icon="mass_mailing,static/description/icon.png" -->
+
+    <!-- SMS Marketing -->
+        <menuitem id="mass_mailing_sms.mass_mailing_sms_menu_root"
+            name="Messaging"
+            parent="crm.crm_menu_root"
+            sequence="0"
+
+            groups="mass_mailing.group_mass_mailing_user"/>
+           <!--  web_icon="mass_mailing_sms,static/description/icon.png" -->
+
+        <!-- SMS Marketing / SMS Marketing -->
+        <menuitem id="mass_mailing_sms.mass_mailing_sms_menu_mass_sms"
+            name="Send a Message"
+            parent="mass_mailing_sms.mass_mailing_sms_menu_root"
+            sequence="1"
+            groups="mass_mailing.group_mass_mailing_user"/>
+
+        <!-- SMS Marketing / Contacts Lists -->
+        <menuitem id="mass_mailing_sms.mass_mailing_sms_menu_contacts"
+            name="Contacts Lists"
+            parent="crm.crm_menu_root"
+            sequence="2"
+            groups="mass_mailing.group_mass_mailing_user"/>
+        <!-- SMS Marketing / Contacts Lists / Contacts Lists -->
+        <menuitem id="mass_mailing_sms.mailing_list_menu_sms"
+            name="Contacts Lists"
+            parent="mass_mailing_sms.mass_mailing_sms_menu_contacts"
+            sequence="1"
+            groups="mass_mailing.group_mass_mailing_user"/>
+        <!-- SMS Marketing / Contacts Lists / Contacts -->
+        <menuitem id="mass_mailing_sms.mailing_contact_menu_sms"
+            name="Contacts"
+            parent="mass_mailing_sms.mass_mailing_sms_menu_contacts"
+            sequence="2"
+            groups="mass_mailing.group_mass_mailing_user"/>
+
+        <!-- SMS Marketing / Reporting -->
+        <menuitem id="mass_mailing_sms.mass_mailing_sms_menu_reporting"
+            name="Messaging"
+             parent="crm.crm_menu_report"
+            sequence="80"
+            groups="mass_mailing.group_mass_mailing_user"/>
+
+        <!-- SMS Marketing / Configuration -->
+        <menuitem id="mass_mailing_sms.mass_mailing_sms_menu_configuration"
+            name="Mailing Settings"
+             parent="crm.crm_menu_config"
+            sequence="500"
+            groups="mass_mailing.group_mass_mailing_user"/>
+        <!-- SMS Marketing / Configuration / Blacklist -->
+        <menuitem id="mass_mailing_sms.phone_blacklist_menu"
+            name="Phone Blacklist"
+            parent="mass_mailing_sms.mass_mailing_sms_menu_configuration"
+            sequence="1"
+            action="phone_validation.phone_blacklist_action"
+            groups="mass_mailing.group_mass_mailing_user"/>
+        <!-- SMS Marketing / Configuration / Link Tracker -->
+        <menuitem id="mass_mailing_sms.link_tracker_menu"
+            name="Link Tracker Blacklist"
+            parent="mass_mailing_sms.mass_mailing_sms_menu_configuration"
+            sequence="2"
+            action="link_tracker.link_tracker_action"
+            groups="mass_mailing.group_mass_mailing_user"/>
+
+      <menuitem id="utm.marketing_utm"
+        name="UTMs"
+        parent="mass_mailing_sms.mass_mailing_sms_menu_configuration"
+        sequence="550"
+        groups="base.group_no_one"/>
+
+      <menuitem id="utm.menu_utm_campaign_act"
+        action="utm.utm_campaign_action"
+        parent="utm.marketing_utm"
+        sequence="1"
+        groups="base.group_no_one"/>
+
+  <menuitem id="utm.menu_utm_medium"
+            name="Medium of Communication"
+        action="utm.utm_medium_action"
+        parent="mass_mailing_sms.mass_mailing_sms_menu_configuration"
+        sequence="15"
+        groups="base.group_no_one"/>
+
+</odoo>

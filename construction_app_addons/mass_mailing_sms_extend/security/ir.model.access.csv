@@ -1,0 +1,8 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_whatsapp_media_message","whatsapp_media_message_user","model_whatsapp_media_message","mass_mailing_sms_extend.group_mass_whatsapp_user",1,1,1,1
+"access_whatsapp_plain_message","whatsapp_plain_message_user","model_whatsapp_plain_message","mass_mailing_sms_extend.group_mass_whatsapp_user",1,1,1,1
+"access_chat_api_setup","chat_api_setup","model_chat_api_setup","mass_mailing_sms_extend.group_mass_whatsapp_user",1,1,1,0
+"access_whatsapp_customer_reply","whatsapp_customer_reply_access","model_whatsapp_customer_reply","mass_mailing_sms_extend.group_mass_whatsapp_user",1,1,1,1
+"access_whatsapp_rabbit_queue","whatsapp_rabbit_queue","model_whatsapp_rabbit_queue","mass_mailing_sms_extend.group_mass_whatsapp_user",1,1,1,1
+"access_whatsapp_redis_queue","whatsapp_redis_queue","model_whatsapp_redis_queue","mass_mailing_sms_extend.group_mass_whatsapp_user",1,1,1,1
+"access_whatsapp_messaging_groups","whatsapp_messaging_groups","model_marketing_message_groups","mass_mailing_sms_extend.group_mass_whatsapp_user",1,1,1,1

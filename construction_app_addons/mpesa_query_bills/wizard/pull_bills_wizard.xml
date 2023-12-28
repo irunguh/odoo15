@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--<act_window
+        id="petrol_request_draft_order_wizard_action"
+        name="Generate Loading Order"
+        binding_model="transport.loading.order"
+        res_model="transport.loading.order.wizard"
+        view_mode="form"
+        target="new"
+        groups="sales_team.group_sale_salesman"
+    />-->
+        <record id="view_mpesa_bill_status_wizard" model="ir.ui.view">
+            <field name="name">Query MPESA Bills</field>
+            <field name="model">pullmpesa.bills.wizard</field>
+            <field name="arch" type="xml">
+                <form string="MPESA Bills">
+                    <group>
+                        <group>
+                            <field name="transaction_no" />
+                            <field name="customer_account" />
+                        </group>
+                    </group>
+                    <p class="oe_grey">
+                        Pull transaction status and details from mpesa portal using MPESA transaction code. This allows you to automatically create bills that MPESA
+                        portal failed to push or were never received in the ERP from MPESA IPN
+                    </p>
+
+                    <footer>
+                        <button name="pull_mpesa_bills_from_mpesa" class="btn-success" string="Query MPESA Portal" type="object"/>
+                        <button string="Cancel" class="btn-danger" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_query_mpesa_bill_status" model="ir.actions.act_window">
+            <field name="name">Query MPESA Bill</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pullmpesa.bills.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="groups_id" eval="[(4,ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+         <menuitem name="Query a Transaction" id="query_mpesa_bills" action="action_query_mpesa_bill_status"
+                  sequence="11" parent="mpesa_payment_transactions.mpesa_1_root"
+                 />
+
+</odoo>

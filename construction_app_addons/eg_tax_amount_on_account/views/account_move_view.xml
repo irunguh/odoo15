@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_extended_tax_amount_form_view" model="ir.ui.view">
+        <field name="name">account.move.extended.tax.amount.form.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[2]" position="inside">
+                <field name="print_tax_amount_in_invoice" string="Print Tax Amount on Invoice" attrs="{'invisible': [('move_type', 'not in', ['out_invoice'])]}"/>
+                <field name="print_tax_amount_in_invoice" string="Print Tax Amount on Credit Note" attrs="{'invisible': [('move_type', 'not in', ['out_refund'])]}"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='tax_ids']" position="after">
+                <field name="tax_amount"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

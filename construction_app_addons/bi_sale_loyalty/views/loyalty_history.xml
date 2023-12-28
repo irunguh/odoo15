@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<record id="loyalty_history_tree_view" model="ir.ui.view">
+		<field name="name">loyalty.history.tree.view</field>
+		<field name="model">loyalty.history</field>
+		<field name="arch" type="xml">
+		   <tree string=" Loyalty History" decoration-info="transaction_type == 'receive'" decoration-muted="is_expired == True" decoration-danger="transaction_type == 'send'" create="false">
+		   		<field name="date"/>	
+		   		<field name="partner_id"/>										
+				<field name="payment_id"/>	
+				<field name="transaction_type"/>	
+				<field name="payment_amount"/>
+				<field name="points"/>	
+				<field name="is_expired" invisible="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="loyalty_history_form_view" model="ir.ui.view">
+		<field name="name">loyalty.history.form.view</field>
+		<field name="model">loyalty.history</field>
+		<field name="arch" type="xml">
+			<form string=" Loyalty History" create="false" edit="false" >
+					<sheet>
+						<group>
+							<group>
+								<field name="payment_id"/>
+								<field name="partner_id"/>
+								<field name="transaction_type"/>
+							</group>
+							<group>
+								<field name="date"/>
+								<field name="points"/>
+								<field name="product_id"/>
+							</group>
+							<group>
+								<field name="delivery_order_id" invisible="1"/>
+								<field name="payment_amount"/>
+								<field name="extra_note"/>
+							</group>
+							<group invisible="1">
+								<field name="is_expired"/>
+								<field name="to_be_expired"/>
+								<field name="is_send_cancel"/>
+								<field name="used_from_last"/>
+							</group>
+						</group>
+					</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_loyalty_history" model="ir.actions.act_window">
+		<field name="name">Loyalty History</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">loyalty.history</field>
+<!-- 		<field name="view_type">form</field>
+ -->		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="main_loyalty_history"
+		name="Loyalty Management" groups="bi_sale_loyalty.group_loyalty_history,bi_sale_loyalty.group_loyalty_history_user"
+		web_icon="bi_sale_loyalty,static/description/icon.png"
+		sequence="40"
+		/>
+
+	<menuitem name="Loyalty History"
+		id="menu_loyalty_history"
+		sequence="1"
+		parent="main_loyalty_history" 
+		action="action_loyalty_history"/>
+</odoo>

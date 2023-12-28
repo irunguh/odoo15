@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<odoo noupdate="1">
+
+    <!--Group for  manager -->
+    <record id="group_insurance_user" model="res.groups">
+        <field name="name">Insurance User</field>
+    </record>
+
+    <!--Group for  user -->
+    <record id="group_insurance_manager" model="res.groups">
+        <field name="name">Insurance Manager</field>
+    </record>
+
+     <!--Group for  user -->
+    <record id="group_insurance_focal_user" model="res.groups">
+        <field name="name">Insurance Focal User</field>
+    </record>
+
+</odoo>

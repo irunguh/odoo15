@@ -1,0 +1,20 @@
+*** https://developers.facebook.com/docs/whatsapp/messaging-limits#messaging
+- Messaging Limits is determined by how you send quality messages
+- You get free 1000 messages
+- then if you are not blocked messaging limits will increase
+- Limits apply only on business initiated conversations and not customer/client initiated
+
+- Data Imports can be done directly into the database - https://www.postgresqltutorial.com/postgresql-tutorial/import-csv-file-into-posgresql-table/
+- Its usually faster tto import data in sql level (If you are importing millions)
+- XML RPC - If you get challenges setting up on Ubuntu and you pythohn2.7 for apache2 - http://pymotw.com/2/xmlrpclib/
+
+>>> demo
+/etc/apache2/sites-available/chatbot1msg-le-ssl.conf
+
+>>> run python script in the background
+nohup python message_subscriber.py &
+
+>>> Some requirement
+pip3 install pika
+pip3 install redis
+pip3 install jingtrang

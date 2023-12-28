@@ -1,0 +1,4 @@
+- Redis implementationr mass mailing works better because there is no blocking and queues.
+- Learn from https://www.twilio.com/blog/sms-microservice-python-twilio-redis-pub-sub
+- Installation of Redis - https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-20-04
+- Running redis subscriber in background as a python script - https://askubuntu.com/questions/396654/how-to-run-a-python-program-in-the-background-even-after-closing-the-terminal

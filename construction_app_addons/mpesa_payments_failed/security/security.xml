@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<odoo noupdate="1">
+
+    <!--Group for  manager -->
+    <record id="group_failed_paybill_payments_manager" model="res.groups">
+        <field name="name">MPESA Missing Payment Manager</field>
+    </record>
+
+    <!--Group for  user -->
+    <record id="group_failed_paybill_payments_user" model="res.groups">
+        <field name="name">MPESA Missing Payment User</field>
+    </record>
+
+</odoo>
